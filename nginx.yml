@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  main:
+    image: nginx
+    networks:
+      - traefik_mynet
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+      labels:
+        - "traefik.port=80"
+        - "traefik.backend=main"
+        - "traefik.frontend.rule=Host:.com"
+networks:
+  traefik_mynet:
+    external: true
